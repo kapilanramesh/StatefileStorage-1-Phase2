@@ -1,0 +1,22 @@
+---
+- name: Configure NGINX on EC2 instance
+  hosts: webserver
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+    - name: Update APT packages
+      apt:
+        update_cache: yes
+
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+
+    - name: Ensure NGINX is running and enabled
+      systemd:
+        name: nginx
+        enabled: yes
+        state: started
