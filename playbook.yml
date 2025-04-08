@@ -1,15 +1,20 @@
-- name: Install and start NGINX
+---
+- name: Provision web server
   hosts: web
   become: yes
+
   tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
     - name: Install NGINX
       apt:
         name: nginx
         state: present
-        update_cache: yes
 
-    - name: Ensure NGINX is running
-      service:
+    - name: Start and enable NGINX
+      systemd:
         name: nginx
         state: started
         enabled: yes
