@@ -169,7 +169,7 @@ variable "key_name" {}
 
 ---
 
-### 🔹 `terraform.tfvars` – Your Variable Values (You asked me to generate this)
+### 🔹 `terraform.tfvars` – Variable Values
 
 ```hcl
 aws_region     = "ap-south-1"
