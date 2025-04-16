@@ -28,18 +28,134 @@ This project automates the provisioning of a web server on AWS using Terraform a
 
 ## ⚙️ **Terraform: Infrastructure Provisioning**
 
-### 🔹 `main.tf` – Resources Defined
+Absolutely Kapilan! Here's a **detailed, line-by-line explanation** of the `main.tf` file in your project, written in a super beginner-friendly and crystal-clear way:
 
-Creates:
-- **EC2 Instance** with:
-  - `ubuntu` AMI
-  - SSH key access
-  - Security group allowing HTTP (port 80) and SSH (port 22)
+---
 
-- **Security Group**:
-  - Ingress rules for SSH and HTTP
-  - Egress for all outbound traffic
+## 🔍 `main.tf` 
 
+> This file is responsible for **creating the EC2 instance** and **setting up the security group** so that you can access it via SSH and HTTP.
+
+---
+
+### ✅ 1. **Provider Block**
+
+```hcl
+provider "aws" {
+  region = var.aws_region
+}
+```
+
+- This tells Terraform to use **AWS** as the cloud provider.
+- The `region` is taken from a variable (`aws_region`) that you define in `terraform.tfvars`.
+
+---
+
+### ✅ 2. **Security Group for EC2**
+
+```hcl
+resource "aws_security_group" "web_sg" {
+  name        = "web-server-sg"
+  description = "Allow HTTP and SSH"
+```
+
+- This block **creates a security group** (a virtual firewall) that allows only **port 22 (SSH)** and **port 80 (HTTP)** traffic.
+- The name is `web-server-sg`.
+
+```hcl
+  ingress {
+    description = "Allow SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+```
+
+- Allows **SSH access** to the instance (port 22).
+- `cidr_blocks = ["0.0.0.0/0"]` means **anyone can connect via SSH** (this is fine for testing, but for production, restrict IPs).
+
+```hcl
+  ingress {
+    description = "Allow HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+```
+
+- Allows **HTTP access** so a browser can load your website (NGINX later).
+- Port 80 is used for regular websites.
+
+```hcl
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+```
+
+- This allows **all outbound traffic** (e.g., downloading updates or software from the internet).
+
+```hcl
+  tags = {
+    Name = "web-sg"
+  }
+}
+```
+
+- Tags the security group with a name (for easy identification in AWS console).
+
+---
+
+### ✅ 3. **EC2 Instance**
+
+```hcl
+resource "aws_instance" "web" {
+  ami                    = var.ami
+  instance_type          = var.instance_type
+  key_name               = var.key_name
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+```
+
+- This block **creates an EC2 virtual machine**.
+- `ami`: Defines the operating system (you provide an Ubuntu AMI).
+- `instance_type`: Defines hardware (e.g., `t2.micro` = free tier).
+- `key_name`: The SSH key you'll use to login to the instance.
+- `vpc_security_group_ids`: Assigns the security group we just created.
+
+```hcl
+  associate_public_ip_address = true
+```
+
+- Gives the instance a **public IP**, so it’s accessible from the internet.
+
+```hcl
+  tags = {
+    Name = "web-server"
+  }
+}
+```
+
+- Tags the EC2 instance with a name (`web-server`) for easy identification in AWS.
+
+---
+
+## 🔚 Summary (What This File Does):
+
+✅ **Creates** a security group that:
+- Allows SSH (22)
+- Allows HTTP (80)
+- Allows all outbound traffic
+
+✅ **Launches** an EC2 instance that:
+- Runs Ubuntu (via `ami`)
+- Is accessible with your SSH key
+- Is publicly reachable
+- Is tagged for clarity
+  
 ---
 
 ### 🔹 `variable.tf` – Declares Required Variables
@@ -163,11 +279,3 @@ Visit: `http://<your-ec2-ip>` — You should see the **NGINX welcome page**!
 - Use `prevent_destroy` for important resources in Terraform (like in the backend setup you previously shared).
 
 ---
-
-## 🧠 **Extra Notes**
-- You can combine this setup with the earlier **Terraform Backend** project (S3 + DynamoDB) to store Terraform state remotely.
-- You can add more roles to Ansible (e.g., deploying your own app).
-
----
-
-If you'd like this as a `README.md` file to include in your repo, I can generate that for you too. Just say the word!
