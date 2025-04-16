@@ -272,10 +272,3 @@ ansible-playbook playbook.yml
 Visit: `http://<your-ec2-ip>` — You should see the **NGINX welcome page**!
 
 ---
-
-## 🔐 **Security Tips**
-- Security group restricts ports to HTTP and SSH only.
-- Never expose your private key or hardcode it in public repos.
-- Use `prevent_destroy` for important resources in Terraform (like in the backend setup you previously shared).
-
----
