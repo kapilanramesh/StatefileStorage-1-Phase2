@@ -4,11 +4,11 @@
 
 ## 🧾 **Overview**
 
-This project automates the provisioning of a web server on AWS using **Terraform** and **Ansible**. It follows infrastructure as code (IaC) best practices by:
+This project automates the provisioning of a web server on AWS using Terraform and Ansible. It follows infrastructure as code (IaC) best practices by:
 
-- Creating an EC2 instance using **Terraform**.
-- Using **Ansible** to configure the instance as a **NGINX web server**.
-- Using **remote backend** (S3 + DynamoDB) for Terraform state management.
+- Creating an EC2 instance using Terraform.
+- Using Ansible to configure the instance as a NGINX web server.
+- Using remote backend (S3 + DynamoDB) for Terraform state management.
 
 ---
 
