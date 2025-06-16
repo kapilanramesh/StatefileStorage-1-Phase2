@@ -28,8 +28,7 @@ This project automates the provisioning of a web server on AWS using Terraform a
 
 ## ⚙️ **Terraform: Infrastructure Provisioning**
 
-Absolutely Kapilan! Here's a **detailed, line-by-line explanation** of the `main.tf` file in your project, written in a super beginner-friendly and crystal-clear way:
-
+Here's a **detailed, line-by-line explanation** of the `main.tf` file in our project
 ---
 
 ## 🔍 `main.tf` 
