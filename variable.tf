@@ -15,3 +15,19 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
+# Backend related variables
+variable "s3_bucket_name" {
+  description = "S3 bucket name to store Terraform state"
+  type        = string
+}
+
+variable "dynamodb_table_name" {
+  description = "DynamoDB table name for Terraform state locks"
+  type        = string
+}
+
+variable "environment" {
+  description = "Environment name (dev/staging/prod)"
+  type        = string
+  default     = "dev"
+}
