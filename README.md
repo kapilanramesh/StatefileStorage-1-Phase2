@@ -3,7 +3,7 @@
 
 🔹 Important
 
-All team members working on the EC2 project must have the same backend config so they all share the same state.
+All team members working on the EC2 project must have the same backend config so they all share the same state. So 1stly execute that before coming to phase 2,3.
 
 No need to copy the backend repo into this repo — Terraform just connects remotely to the S3 bucket + DynamoDB table.
 
