@@ -1,4 +1,12 @@
 ---
+# 1st Important thing to Understand
+
+🔹 Important
+
+All team members working on the EC2 project must have the same backend config so they all share the same state.
+
+No need to copy the backend repo into this repo — Terraform just connects remotely to the S3 bucket + DynamoDB table.
+
 
 # ✅ **Terraform + Ansible Project: Provisioning Web Server on AWS**
 
